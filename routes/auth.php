@@ -11,6 +11,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+// Il middleware guest serve a fare in modo che tutte le rotte all'interno di questo gruppo
+// siano accessibili SOLO ed UNICAMENTE a utenti NON loggati
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
@@ -35,6 +37,8 @@ Route::middleware('guest')->group(function () {
                 ->name('password.store');
 });
 
+// Il middleware auth serve a fare in modo che tutte le rotte all'interno di questo gruppo
+// siano accessibili SOLO ed UNICAMENTE a utenti che SONO loggati
 Route::middleware('auth')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
                 ->name('verification.notice');
