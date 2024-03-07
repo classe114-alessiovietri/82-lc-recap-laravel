@@ -23,4 +23,12 @@ class Post extends Model
     //     'created_at',
     //     'updated_at'
     // ];
+
+    /*
+        Relationships
+    */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

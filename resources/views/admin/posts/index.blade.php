@@ -22,6 +22,7 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Titolo</th>
+                                <th scope="col">Categoria</th>
                                 <th scope="col">Creato il</th>
                                 <th scope="col">Alle</th>
                                 <th scope="col">Azioni</th>
@@ -32,6 +33,11 @@
                                 <tr>
                                     <th scope="row">{{ $post->id }}</th>
                                     <td>{{ $post->title }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.categories.show', ['category' => $post->category->id]) }}">
+                                            {{ $post->category->title }}
+                                        </a>
+                                    </td>
                                     {{-- Come formattare una data: https://www.php.net/manual/en/datetime.format.php --}}
                                     <td>{{ $post->created_at->format('d/m/Y') }}</td>
                                     <td>{{ $post->created_at->format('H:i') }}</td>

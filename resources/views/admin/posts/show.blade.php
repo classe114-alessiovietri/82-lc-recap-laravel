@@ -10,6 +10,12 @@
                     <h1 class="text-center text-success">
                         {{ $post->title }}
                     </h1>
+                    <h2>
+                        Categoria:
+                        <a href="{{ route('admin.categories.show', ['category' => $post->category->id]) }}">
+                            {{ $post->category->title }}
+                        </a>
+                    </h2>
 
                     <p>
                         {{ $post->content }}
