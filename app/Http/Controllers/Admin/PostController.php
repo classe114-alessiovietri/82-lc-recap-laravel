@@ -36,10 +36,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // $postData = $request->validate([
-        //     'title' => 'required',
-        //     'content' => 'required',
-        // ]);
+        $postData = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string|max:10000',
+        ]);
 
         $postData = $request->all();
 
@@ -82,10 +82,10 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        // $postData = $request->validate([
-        //     'title' => 'required',
-        //     'content' => 'required',
-        // ]);
+        $postData = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string|max:10000',
+        ]);
 
         $postData = $request->all();
 

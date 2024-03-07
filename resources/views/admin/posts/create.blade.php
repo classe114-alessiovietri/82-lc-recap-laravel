@@ -30,8 +30,8 @@
             </div>
 
             <div class="mb-3">
-                <label for="content" class="form-label">Contenuto</label>
-                <textarea class="form-control" id="content" name="content" rows="3" placeholder="Inserisci il contenuto..." required>{{ old('content') }}</textarea>
+                <label for="content" class="form-label">Contenuto <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="content" name="content" rows="3" placeholder="Inserisci il contenuto..." maxlength="10000" required>{{ old('content') }}</textarea>
             </div>
 
             <div>
