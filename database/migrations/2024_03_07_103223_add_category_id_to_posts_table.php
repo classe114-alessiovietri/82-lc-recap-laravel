@@ -12,11 +12,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->unsignedBigInteger('category_id')->after('content')->nullable();
+            // $table->unsignedBigInteger('category_id')->after('content')->nullable();
+            // $table->foreign('category_id')
+            //         ->references('id')
+            //         ->on('categories')
+            //         ->onDelete('set null')
+            //         ->onUpdate('cascade');
 
-            $table->foreign('category_id')
-                    ->references('id')
-                    ->on('categories');
+            /*
+                OPPURE
+            */
+
+            $table->foreignId('category_id')
+                    ->after('content')
+                    ->nullable()
+                    ->constrained()
+                    ->onDelete('set null')
+                    ->onUpdate('cascade');
         });
     }
 

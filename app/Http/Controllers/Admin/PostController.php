@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 // Models
 use App\Models\Post;
+use App\Models\Category;
 
 // Helpers
 use Illuminate\Support\Str;
@@ -32,7 +33,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -55,6 +58,7 @@ class PostController extends Controller
             'title' => $postData['title'],
             'slug' => $slug,
             'content' => $postData['content'],
+            'category_id' => $postData['category_id'],
         ]);
 
         return redirect()->route('admin.posts.show', compact('post'));
@@ -73,7 +77,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::all();
+
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -92,7 +98,12 @@ class PostController extends Controller
         //     // Genera un nuovo slug
         // }
 
-        $post->update($postData);
+        $post->update([
+            'title' => $postData['title'],
+            'slug' => $slug,
+            'content' => $postData['content'],
+            'category_id' => $postData['category_id'],
+        ]);
 
         return redirect()->route('admin.posts.show', compact('post'));
     }

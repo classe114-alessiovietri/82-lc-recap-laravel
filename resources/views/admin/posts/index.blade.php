@@ -34,9 +34,13 @@
                                     <th scope="row">{{ $post->id }}</th>
                                     <td>{{ $post->title }}</td>
                                     <td>
-                                        <a href="{{ route('admin.categories.show', ['category' => $post->category->id]) }}">
-                                            {{ $post->category->title }}
-                                        </a>
+                                        @if ($post->category != null)
+                                            <a href="{{ route('admin.categories.show', ['category' => $post->category->id]) }}">
+                                                {{ $post->category->title }}
+                                            </a>
+                                        @else
+                                            -
+                                        @endif
                                     </td>
                                     {{-- Come formattare una data: https://www.php.net/manual/en/datetime.format.php --}}
                                     <td>{{ $post->created_at->format('d/m/Y') }}</td>
