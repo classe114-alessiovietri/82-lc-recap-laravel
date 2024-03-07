@@ -11,6 +11,10 @@ use App\Models\Post;
 // Helpers
 use Illuminate\Support\Str;
 
+// Request
+use App\Http\Requests\Post\StoreRequest as PostStoreRequest;
+use App\Http\Requests\Post\UpdateRequest as PostUpdateRequest;
+
 class PostController extends Controller
 {
     /**
@@ -34,14 +38,9 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
-        $postData = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string|max:10000',
-        ]);
-
-        $postData = $request->all();
+        $postData = $request->validated();
 
         $slug = Str::slug($postData['title']);
 
@@ -80,14 +79,9 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(PostUpdateRequest $request, Post $post)
     {
-        $postData = $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string|max:10000',
-        ]);
-
-        $postData = $request->all();
+        $postData = $request->validated();
 
         $slug = Str::slug($postData['title']);
 
