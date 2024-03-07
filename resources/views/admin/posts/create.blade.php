@@ -10,12 +10,12 @@
 <div class="row">
     <div class="col py-4">
         <div class="mb-4">
-            <a href="{{ route('posts.index') }}" class="btn btn-primary">
+            <a href="{{ route('admin.posts.index') }}" class="btn btn-primary">
                 Torna all'index dei post
             </a>
         </div>
 
-        <form action="{{ route('posts.store') }}" method="POST">
+        <form action="{{ route('admin.posts.store') }}" method="POST">
             {{--
                 C   Cross
                 S   Site

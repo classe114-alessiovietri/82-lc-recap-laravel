@@ -11,6 +11,12 @@
                         Tutti i post
                     </h1>
 
+                    <div class="mb-3">
+                        <a href="{{ route('admin.posts.create') }}" class="btn btn-success w-100">
+                            + Aggiungi
+                        </a>
+                    </div>
+
                     <table class="table">
                         <thead>
                             <tr>
@@ -33,6 +39,16 @@
                                         <a href="{{ route('admin.posts.show', ['post' => $post->id]) }}" class="btn btn-xs btn-primary">
                                             Vedi
                                         </a>
+                                        <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}" class="btn btn-xs btn-warning">
+                                            Modifica
+                                        </a>
+                                        <form class="d-inline-block" action="{{ route('admin.posts.destroy', ['post' => $post->id]) }}" method="post" onsubmit="return confirm('Sei sicuro di voler eliminare questo post?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">
+                                                Elimina
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

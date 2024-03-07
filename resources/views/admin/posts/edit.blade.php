@@ -10,12 +10,12 @@
 <div class="row">
     <div class="col py-4">
         <div class="mb-4">
-            <a href="{{ route('posts.index') }}" class="btn btn-primary">
+            <a href="{{ route('admin.posts.index') }}" class="btn btn-primary">
                 Torna all'index delle paste
             </a>
         </div>
 
-        <form action="{{ route('posts.update', ['post' => $post->id]) }}" method="POST">
+        <form action="{{ route('admin.posts.update', ['post' => $post->id]) }}" method="POST">
             {{--
                 C   Cross
                 S   Site
@@ -34,12 +34,6 @@
             <div class="mb-3">
                 <label for="content" class="form-label">Contenuto</label>
                 <textarea class="form-control" id="content" name="content" rows="3" placeholder="Inserisci il contenuto..." required>{{ old('content', $post->content) }}</textarea>
-            </div>
-
-            <div>
-                <button type="submit" class="btn btn-success w-100">
-                    + Aggiungi
-                </button>
             </div>
 
             <div>
