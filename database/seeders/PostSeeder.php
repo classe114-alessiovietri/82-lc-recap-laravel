@@ -7,9 +7,13 @@ use Illuminate\Database\Seeder;
 
 // Models
 use App\Models\Post;
+use App\Models\Category;
 
 // Helpers
 use Illuminate\Support\Str;
+
+// Helpers
+use Illuminate\Support\Facades\Schema;
 
 class PostSeeder extends Seeder
 {
@@ -18,7 +22,9 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
         Post::truncate();
+        Schema::enableForeignKeyConstraints();
 
         // OPPURE
 
@@ -33,11 +39,13 @@ class PostSeeder extends Seeder
             // nel DB, ma qui stiamo dando per scontato che ci genererà tutti titoli diversi (e quindi, anche slug diversi)
             $slug = Str::slug($title);
 
+            $randomCategory = Category::inRandomOrder()->first();
 
             // $post = new Post();
             // $post->title = $title;
             // $post->slug = $slug;
             // $post->content = fake()->paragraph();
+            // $post->category_id = $randomCategory->id;
             // $post->save();
 
             // OPPURE
@@ -46,6 +54,7 @@ class PostSeeder extends Seeder
                 'title' => $title,
                 'slug' => $slug,
                 'content' => fake()->paragraph(),
+                'category_id' => $randomCategory->id,
             ]);
 
             // OPPURE
@@ -55,6 +64,7 @@ class PostSeeder extends Seeder
             //     'title' => $title,
             //     'slug' => $slug,
             //     'content' => fake()->paragraph(),
+            //     'category_id' => $randomCategory->id,
             // ]);
             // $post->save();
         }

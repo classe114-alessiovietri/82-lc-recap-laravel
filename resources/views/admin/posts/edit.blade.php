@@ -11,7 +11,7 @@
     <div class="col py-4">
         <div class="mb-4">
             <a href="{{ route('admin.posts.index') }}" class="btn btn-primary">
-                Torna all'index delle paste
+                Torna all'index dei post
             </a>
         </div>
 

@@ -13,7 +13,8 @@ class Post extends Model
     protected $fillable = [
         'title',
         'slug',
-        'content'
+        'content',
+        'category_id'
     ];
 
     // Tutte le colonne che NON sono abilitate al mass-assignment
