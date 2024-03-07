@@ -36,17 +36,21 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // $postData = $request->validate([
+        //     'title' => 'required',
+        //     'content' => 'required',
+        // ]);
+
         $postData = $request->all();
 
         $slug = Str::slug($postData['title']);
 
-        $existingPostWithThisSlug = Post::where('slug', $slug)->first();
+        // $existingPostWithThisSlug = Post::where('slug', $slug)->first();
 
-        // Se entra qui, vuol dire che non ha trovato un post con questo slug
-        if ($existingPostWithThisSlug != null) {
-            // Genera un nuovo slug
-            $slug = $slug.'-1';
-        }
+        // // Se entra qui, vuol dire che non ha trovato un post con questo slug
+        // if ($existingPostWithThisSlug != null) {
+        //     // Genera un nuovo slug
+        // }
 
         $post = Post::create([
             'title' => $postData['title'],
@@ -67,7 +71,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -75,7 +79,25 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        // $postData = $request->validate([
+        //     'title' => 'required',
+        //     'content' => 'required',
+        // ]);
+
+        $postData = $request->all();
+
+        $slug = Str::slug($postData['title']);
+
+        // $existingPostWithThisSlug = Post::where('slug', $slug)->first();
+
+        // // Se entra qui, vuol dire che non ha trovato un post con questo slug
+        // if ($existingPostWithThisSlug != null) {
+        //     // Genera un nuovo slug
+        // }
+
+        $post->update($postData);
+
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
@@ -83,6 +105,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return view('admin.posts.index');
     }
 }
