@@ -8,6 +8,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\Admin\MainController as AdminMainController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\TagController as AdminTagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,8 @@ Route::prefix('admin')
     Route::resource('posts', AdminPostController::class);
 
     Route::resource('categories', AdminCategoryController::class);
+
+    Route::resource('tags', AdminTagController::class);
 
 });
 
