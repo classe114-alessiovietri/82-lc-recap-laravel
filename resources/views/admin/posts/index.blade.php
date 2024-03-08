@@ -23,6 +23,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Titolo</th>
                                 <th scope="col">Categoria</th>
+                                <th scope="col">Tag</th>
                                 <th scope="col">Creato il</th>
                                 <th scope="col">Alle</th>
                                 <th scope="col">Azioni</th>
@@ -41,6 +42,29 @@
                                         @else
                                             -
                                         @endif
+                                    </td>
+                                    <td>
+                                        <div>
+                                            @forelse ($post->tags as $tag)
+                                                <a href="{{ route('admin.tags.show', ['tag' => $tag->id]) }}" class="badge rounded-pill text-bg-primary">
+                                                    {{ $tag->title }}
+                                                </a>
+                                            @empty
+                                                -
+                                            @endforelse
+                                        </div>
+
+                                        {{-- <div>
+                                            @if (count($post->tags) > 0)
+                                                @foreach ($post->tags as $tag)
+                                                    <a href="{{ route('admin.tags.show', ['tag' => $tag->id]) }}" class="badge rounded-pill text-bg-primary">
+                                                        {{ $tag->title }}
+                                                    </a>
+                                                @endforeach
+                                            @else
+                                                -
+                                            @endif
+                                        </div> --}}
                                     </td>
                                     {{-- Come formattare una data: https://www.php.net/manual/en/datetime.format.php --}}
                                     <td>{{ $post->created_at->format('d/m/Y') }}</td>

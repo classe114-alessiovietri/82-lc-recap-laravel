@@ -14,12 +14,13 @@
             </div>
         </div>
     </div>
-    {{-- <div class="row">
+    
+    <div class="row">
         <div class="col">
             <div class="card">
                 <div class="card-body">
                     <h2 class="text-center text-success">
-                        Tutti i post associati a questa categoria
+                        Tutti i post associati a questo tag
                     </h2>
 
                     <ul>
@@ -34,5 +35,5 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 @endsection

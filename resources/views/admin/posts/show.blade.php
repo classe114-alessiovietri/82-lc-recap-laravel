@@ -18,6 +18,16 @@
                             </a>
                         </h2>
                     @endif
+                    <div>
+                        Tag:
+                        @forelse ($post->tags as $tag)
+                            <a href="{{ route('admin.tags.show', ['tag' => $tag->id]) }}" class="badge rounded-pill text-bg-primary">
+                                {{ $tag->title }}
+                            </a>
+                        @empty
+                            -
+                        @endforelse
+                    </div>
 
                     <p>
                         {{ $post->content }}

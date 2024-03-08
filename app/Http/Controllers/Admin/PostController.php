@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 // Models
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Tag;
 
 // Helpers
 use Illuminate\Support\Str;

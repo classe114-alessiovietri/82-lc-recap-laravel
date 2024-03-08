@@ -27,8 +27,15 @@ class Post extends Model
     /*
         Relationships
     */
+    // One-to-Many con Category
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    // Many-to-Many con Tag
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }
