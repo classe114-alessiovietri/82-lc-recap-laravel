@@ -25,6 +25,8 @@ return new class extends Migration
                 ->on('tags')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+
+            $table->primary(['post_id', 'tag_id']);
         });
     }
 
