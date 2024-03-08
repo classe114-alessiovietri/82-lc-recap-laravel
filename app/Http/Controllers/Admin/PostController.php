@@ -35,8 +35,9 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -45,6 +46,8 @@ class PostController extends Controller
     public function store(PostStoreRequest $request)
     {
         $postData = $request->validated();
+
+        // dd($postData);
 
         $slug = Str::slug($postData['title']);
 
@@ -61,6 +64,17 @@ class PostController extends Controller
             'content' => $postData['content'],
             'category_id' => $postData['category_id'],
         ]);
+
+        if (isset($postData['tags'])) {
+            foreach ($postData['tags'] as $singleTagId) {
+                /*
+                    post_id     |   tag_id
+                    ----------------------
+                    $post->id   |  $singleTagId
+                */
+                $post->tags()->attach($singleTagId);
+            }
+        }
 
         return redirect()->route('admin.posts.show', compact('post'));
     }
@@ -79,8 +93,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -105,6 +120,29 @@ class PostController extends Controller
             'content' => $postData['content'],
             'category_id' => $postData['category_id'],
         ]);
+
+        /*
+            1) Non faccio modifiche
+            2) Preservo le vecchie associazioni e aggiungo qualcosa
+            3) Rimuovo qualche preesistente associazione
+            4) Rimuovo TUTTE le preesistenti associazioni
+            5) Rimuovo qualcosa e aggiungo qualcos'altro
+        */
+        // Soluzione di Diego G. -> Va bene, ma SOLO SE non ho altri dati nella tabella pivot (tabella ponte) oltre le foreign key
+        // $post->tags()->detach();                                // 1. Rimuovo tutte le associazioni preesistenti senza fare verifiche
+        // if (isset($postData['tags'])) {                         // 2. Aggiungo quello che mi è stato passato dal frontend, ma solo se c'è qualcosa
+        //     foreach ($postData['tags'] as $singleTagId) {
+        //         $post->tags()->attach($singleTagId);
+        //     }
+        // }
+
+        // Soluzione giusta in ogni caso:
+        if (isset($postData['tags'])) {
+            $post->tags()->sync($postData['tags']);
+        }
+        else {
+            $post->tags()->detach();
+        }
 
         return redirect()->route('admin.posts.show', compact('post'));
     }

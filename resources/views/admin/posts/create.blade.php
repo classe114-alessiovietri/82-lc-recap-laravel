@@ -64,6 +64,25 @@
                 <textarea class="form-control" id="content" name="content" rows="3" placeholder="Inserisci il contenuto..." maxlength="10000" required>{{ old('content') }}</textarea>
             </div>
 
+            <div class="mb-3">
+                <label class="form-label">Tag</label>
+
+                <div>
+                    @foreach ($tags as $tag)
+                        <div class="form-check form-check-inline">
+                            <input
+                                {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}
+                                class="form-check-input"
+                                type="checkbox"
+                                id="tag-{{ $tag->id }}"
+                                name="tags[]"
+                                value="{{ $tag->id }}">
+                            <label class="form-check-label" for="tag-{{ $tag->id }}">{{ $tag->title }}</label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
             <div>
                 <button type="submit" class="btn btn-success w-100">
                     + Aggiungi

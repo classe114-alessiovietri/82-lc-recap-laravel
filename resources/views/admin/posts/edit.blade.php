@@ -40,7 +40,7 @@
 
             <div class="mb-3">
                 <label for="title" class="form-label">Titolo <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $post->title) }}" placeholder="Inserisci il titolo..." maxlength="255" required>
+                <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $post->title) }}" placeholder="Inserisci il titolo..." maxlength="255">
             </div>
 
             <div class="mb-3">
@@ -64,6 +64,32 @@
             <div class="mb-3">
                 <label for="content" class="form-label">Contenuto <span class="text-danger">*</span></label>
                 <textarea class="form-control" id="content" name="content" rows="3" placeholder="Inserisci il contenuto..." maxlength="10000" required>{{ old('content', $post->content) }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Tag</label>
+
+                <div>
+                    @foreach ($tags as $tag)
+                        <div class="form-check form-check-inline">
+                            <input
+                                {{-- Se c'è l'old, vuol dire che c'è stato un errore --}}
+                                @if ($errors->any())
+                                    {{-- Faccio le verifiche sull'old --}}
+                                    {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}
+                                @else
+                                    {{-- Faccio le verifiche sulla collezione --}}
+                                    {{ $post->tags->contains($tag->id) ? 'checked' : '' }}
+                                @endif
+                                class="form-check-input"
+                                type="checkbox"
+                                id="tag-{{ $tag->id }}"
+                                name="tags[]"
+                                value="{{ $tag->id }}">
+                            <label class="form-check-label" for="tag-{{ $tag->id }}">{{ $tag->title }}</label>
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
             <div>
