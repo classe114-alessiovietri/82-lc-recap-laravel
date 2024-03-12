@@ -29,6 +29,8 @@ class UpdateRequest extends FormRequest
             'content' => 'required|string|max:10000',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|array|exists:tags,id',
+            'cover_img' => 'nullable|image',
+            'delete_cover_img' => 'nullable|boolean',
         ];
     }
 

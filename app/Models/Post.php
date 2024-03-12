@@ -14,7 +14,8 @@ class Post extends Model
         'title',
         'slug',
         'content',
-        'category_id'
+        'category_id',
+        'cover_img'
     ];
 
     // Tutte le colonne che NON sono abilitate al mass-assignment

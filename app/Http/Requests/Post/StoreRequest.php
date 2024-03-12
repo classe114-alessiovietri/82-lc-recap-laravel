@@ -29,6 +29,7 @@ class StoreRequest extends FormRequest
             'content' => 'required|string|max:10000',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|array|exists:tags,id',
+            'cover_img' => 'nullable|image',
         ];
     }
 

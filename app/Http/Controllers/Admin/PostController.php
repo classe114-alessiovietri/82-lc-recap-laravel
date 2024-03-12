@@ -12,6 +12,7 @@ use App\Models\Tag;
 
 // Helpers
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 // Request
 use App\Http\Requests\Post\StoreRequest as PostStoreRequest;
@@ -49,6 +50,13 @@ class PostController extends Controller
 
         // dd($postData);
 
+        $coverImgPath = null;
+        if (isset($postData['cover_img'])) {
+            $coverImgPath = Storage::disk('public')->put('images', $postData['cover_img']);
+        }
+
+        // dd($coverImgPath);
+
         $slug = Str::slug($postData['title']);
 
         // $existingPostWithThisSlug = Post::where('slug', $slug)->first();
@@ -63,6 +71,7 @@ class PostController extends Controller
             'slug' => $slug,
             'content' => $postData['content'],
             'category_id' => $postData['category_id'],
+            'cover_img' => $coverImgPath,
         ]);
 
         if (isset($postData['tags'])) {
@@ -105,6 +114,33 @@ class PostController extends Controller
     {
         $postData = $request->validated();
 
+        // dd($postData);
+
+        /*
+            Per la cover_img, abbiamo 3 possibilità:
+            1) Aggiungere una nuova immagine, se prima non ce n'era una                 OK
+            2) Rimuovere l'immagine pre-esistente                                       OK
+            3) Sostituire l'immagine pre-esistente con una nuova                        OK
+                -> Scatenare l'operazione di sostituzione dell'immagine vuol dire che:
+                    - Nel form mi è stata passata l'immagine
+                    - EEEEE nel $post già ce n'era una
+            4) Non fare niente                                                          OK
+        */
+
+        $coverImgPath = $post->cover_img;
+        if (isset($postData['cover_img'])) {
+            if ($post->cover_img != null) {
+                Storage::disk('public')->delete($post->cover_img);
+            }
+
+            $coverImgPath = Storage::disk('public')->put('images', $postData['cover_img']);
+        }
+        else if (isset($postData['delete_cover_img'])) {
+            Storage::disk('public')->delete($post->cover_img);
+
+            $coverImgPath = null;
+        }
+
         $slug = Str::slug($postData['title']);
 
         // $existingPostWithThisSlug = Post::where('slug', $slug)->first();
@@ -119,6 +155,7 @@ class PostController extends Controller
             'slug' => $slug,
             'content' => $postData['content'],
             'category_id' => $postData['category_id'],
+            'cover_img' => $coverImgPath,
         ]);
 
         /*
@@ -152,6 +189,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if ($post->cover_img != null) {
+            Storage::disk('public')->delete($post->cover_img);
+        }
+        
         $post->delete();
 
         return redirect()->route('admin.posts.index');
