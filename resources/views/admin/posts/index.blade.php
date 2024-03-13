@@ -21,6 +21,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col">Copertina</th>
                                 <th scope="col">Titolo</th>
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Tag</th>
@@ -33,6 +34,13 @@
                             @foreach ($posts as $post)
                                 <tr>
                                     <th scope="row">{{ $post->id }}</th>
+                                    <td>
+                                        @if ($post->cover_img)
+                                            <img src="{{ asset('storage/'.$post->cover_img) }}" style="width: 50px;">
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                     <td>{{ $post->title }}</td>
                                     <td>
                                         @if ($post->category != null)

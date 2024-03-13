@@ -14,6 +14,15 @@ class Tag extends Model
         'slug'
     ];
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<string>
+     */
+    protected $hidden = [
+        'id',
+    ];
+
     /*
         Relationships
     */

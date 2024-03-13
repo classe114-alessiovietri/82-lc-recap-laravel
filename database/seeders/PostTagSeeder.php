@@ -19,18 +19,10 @@ class PostTagSeeder extends Seeder
         $posts = Post::all();
 
         foreach ($posts as $post) {
-            $tags = Tag::inRandomOrder()->get();
+            $tags = Tag::inRandomOrder()->limit(rand(0, 3))->get();
 
-            $counter = 0;
-            $maxTags = rand(0, 3);
             foreach ($tags as $tag) {
-                if ($counter < $maxTags) {
-                    $post->tags()->attach($tag->id);
-                    $counter++;
-                }
-                else {
-                    break;
-                }
+                $post->tags()->attach($tag->id);
             }
         }
     }

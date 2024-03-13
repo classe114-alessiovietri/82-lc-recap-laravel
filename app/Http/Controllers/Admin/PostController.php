@@ -192,7 +192,7 @@ class PostController extends Controller
         if ($post->cover_img != null) {
             Storage::disk('public')->delete($post->cover_img);
         }
-        
+
         $post->delete();
 
         return redirect()->route('admin.posts.index');
