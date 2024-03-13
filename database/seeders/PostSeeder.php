@@ -33,7 +33,7 @@ class PostSeeder extends Seeder
         //     $singlePost->delete();
         // }
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $title = fake()->sentence();
             // Abbiamo impostato lo slug come UNIQUE, quindi, per pulizia, andrebbe controllato se esiste già quello slug
             // nel DB, ma qui stiamo dando per scontato che ci genererà tutti titoli diversi (e quindi, anche slug diversi)
