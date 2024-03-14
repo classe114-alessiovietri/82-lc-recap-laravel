@@ -18,9 +18,10 @@ class TagSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::withoutForeignKeyConstraints(function () {
-            Tag::truncate();
-        });
+        $allTags = Tag::all();
+        foreach ($allTags as $singleTag) {
+            $singleTag->delete();
+        }
 
         $allTags = [
             'News',

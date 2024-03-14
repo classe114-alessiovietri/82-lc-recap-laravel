@@ -35,8 +35,8 @@
                                 <tr>
                                     <th scope="row">{{ $post->id }}</th>
                                     <td>
-                                        @if ($post->cover_img)
-                                            <img src="{{ asset('storage/'.$post->cover_img) }}" style="width: 50px;">
+                                        @if ($post->full_cover_img)
+                                            <img src="{{ $post->full_cover_img }}" style="width: 50px;">
                                         @else
                                             -
                                         @endif

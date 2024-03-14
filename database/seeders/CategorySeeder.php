@@ -18,9 +18,10 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::withoutForeignKeyConstraints(function () {
-            Category::truncate();
-        });
+        $allCategories = Category::all();
+        foreach ($allCategories as $singleCategory) {
+            $singleCategory->delete();
+        }
 
         $allCategories = [
             'HTML',

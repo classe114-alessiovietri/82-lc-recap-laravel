@@ -11,6 +11,7 @@ use App\Models\Category;
 
 // Helpers
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 // Helpers
 use Illuminate\Support\Facades\Schema;
@@ -22,16 +23,29 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Post::truncate();
-        Schema::enableForeignKeyConstraints();
+        // Schema::disableForeignKeyConstraints();
+        // Post::truncate();
+        // Schema::enableForeignKeyConstraints();
 
         // OPPURE
 
-        // $allPosts = Post::all();
-        // foreach ($allPosts as $singlePost) {
-        //     $singlePost->delete();
+        $allPosts = Post::all();
+        foreach ($allPosts as $singlePost) {
+            $singlePost->delete();
+        }
+
+        // ----------------------------------------------
+
+        // Cancellazione file cover_img precedenti
+        // $oldCoverImages = Storage::disk('public')->files('images');
+        // foreach ($oldCoverImages as $oldCoverImage) {
+        //     Storage::disk('public')->delete($oldCoverImage);
         // }
+
+        // OPPURE
+
+        Storage::disk('public')->deleteDirectory('images');
+        Storage::disk('public')->makeDirectory('images');
 
         for ($i = 0; $i < 5; $i++) {
             $title = fake()->sentence();
@@ -52,7 +66,7 @@ class PostSeeder extends Seeder
 
             $coverImgPath = null;
             if (fake()->boolean()) {
-                $coverImgPath = '/images/'.fake()->image(storage_path('/app/public/images'), 300, 300, null, false);
+                $coverImgPath = 'images/'.fake()->image(storage_path('/app/public/images'), 300, 300, null, false);
             }
 
             $post = Post::create([

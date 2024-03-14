@@ -35,6 +35,27 @@ class Post extends Model
         'category_id',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['full_cover_img'];
+
+    /*
+        "Computed Properties" del model
+    */
+    // full_cover_img
+    public function getFullCoverImgAttribute()
+    {
+        if ($this->cover_img) {
+            return asset('storage/'.$this->cover_img);
+        }
+        else {
+            return null;
+        }
+    }
+
     /*
         Relationships
     */
