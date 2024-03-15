@@ -77,9 +77,15 @@ class PostController extends Controller
         if (isset($postData['tags'])) {
             foreach ($postData['tags'] as $singleTagId) {
                 /*
-                    post_id     |   tag_id
-                    ----------------------
-                    $post->id   |  $singleTagId
+                    INSERT INTO post_tag (`post_id`, `tag_id`) VALUES($post->id, $singleTagId)
+
+                                     CIOE'
+
+                                    post_tag
+                            ----------------------------
+                            post_id     |   tag_id
+                            ----------------------------
+                            $post->id   |  $singleTagId
                 */
                 $post->tags()->attach($singleTagId);
             }

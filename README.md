@@ -1,61 +1,28 @@
-# Passi da fare per poter utilizzare il template di Laravel
+# Relazioni in SQL
 
-0. Creo la repository a partire dal template e mi clono la repository appena creata
+Mettiamo in relazione due tabelle per far sìiìi che i dati delle due siano collegati "concettualmente"
 
-1. Copio il file .env.example e lo rinomino in .env
+Solitamente (ma non è detto che sia così), nella relazione identifichiamo una tabella che definiremo INDIPENDENTE ed un'altra tabella che definiremo DIPENDENTE. Nello specifico, sempre solitamente, la tabella indipendente è quella che ha "senso di esistere" senza l'altra, mentre la tabella dipendente è quella che "non ha troppo senso di esistere" senza la tabella indipendente
 
-2. Apro il terminale ed eseguo il comando composer install
+Tabelle prese in esame: A e B
 
-3. Sempre nel terminale, al termine del comando composer install, eseguo il comando php artisan key:generate
+1. One-to-one:
+Una singola riga della tabella A può essere collegata ad una ed una sola riga della tabella B e viceversa
 
-4. Sempre nel terminale, al termine dell'esecuzione di php artisan key:generate, eseguiamo il comando npm install (oppure, npm i)
+Es. tabella utenti e tabella dettagli utente -> un utente (quindi, una singola riga di utenti) potrà essere collegato ad un solo dettaglio utente (quindi, ad una sola riga di dettagli_utente)
 
-5. Sempre nel terminale, al termine di npm install, eseguire il comando npm run build
-- Al posto di npm run build, potreste eseguire npm run dev e lasciarlo attivo
+Per fare questo collegamento a livello di database, si inserisce una colonna nella tabella DIPENDENTE che contiene i riferimenti alle righe della tabella INDIPENDENTE. Nello specifico, su questa colonna si definisce anche un vincolo di FOREIGN KEY, in modo da creare dei link CONCRETI alle righe della tabella INDIPENDENTE
 
-6. Aprire un altro terminale ed eseguire il comando php artisan serve
+2. One-to-many
+Una singola riga della tabella A può essere collegata a (eventualmente) più righe della tabella B, mentre una riga della tabella B può essere collegata solo ad una riga della tabella A
 
+Es. tabella utenti e tabella articoli -> un utente (quindi una singola riga di utenti) potrà essere collegato ad uno o più articoli (cioè, ad una o più righe della tabella articoli)
 
---------------------------------------------------------------------------------------------
+Per fare questo collegamento a livello di database, si inserisce una colonna nella tabella DIPENDENTE che contiene i riferimenti alle righe della tabella INDIPENDENTE. Nello specifico, su questa colonna si definisce anche un vincolo di FOREIGN KEY, in modo da creare dei link CONCRETI alle righe della tabella INDIPENDENTE
 
+3. Many-to-many
+Una singola riga della tabella A può essere collegata a (eventualmente) più righe della tabella B e viceversa
 
-# Passi per creare un'architettura CRUD completa
+Es. tabella articoli e tabella tag -> un articolo (quindi una singola riga di articoli) potrà essere associato a più tag. Ma a loro anche i singoli tag potranno essere associati a più articoli, creando così una "rete di connessioni"
 
-1. Inseriamo i parametri corretti nel file .env per connetterci al database di interesse
-
-2. Creiamo la migration relativa alla risorsa. Il nome della migration sarà: create_NOME_RISORSA_IN_INGLESE_IN_SNAKE_CASE_AL_PLURALE_table (ad es., se la risorsa è libro, il nome della migration sarà create_books_table)
-
-Una volta create tutte le migration necessarie (oppure per ogni migration), eseguire il comando php artisan migrate 
-
-3. Creiamo il model relativo alla risorsa. Il nome del model sarà: NomeRisorsaInIngleseInPascalCaseAlSingolare (ad es., se la risorsa è libro, il nome del model sarà Book)
-
-4. Creiamo il seeder relativo alla risorsa. Il nome del seeder sarà:
-- NomeDellaTabellaDellaRisorsaInPascalCaseTableSeeder
-- Oppure, NomeDelModelSeeder
-(quindi, ad es., se la mia risorsa è libro, il nome del seeder sarà o BooksTableSeeder, oppure BookSeeder)
-
-Una volta creati tutti i seeder necessari (oppure per ogni seeder), eseguire il comando php artisan db:seed --class=NomeSeeder per ogni seeder
-
-OPPURE
-
-Inserire in DatabaseSeeder la chiamata alla funzione $this->call(ARRAY), dove ARRAY sarà un array contenente tutti i riferimenti alle classi dei seeder da richiamare ed eseguire il comando php artisan db:seed
-
-5. Creiamo il controller relativo alla risorsa. Il nome del controller sarà: NomeDelModelController (ad es., se la risorsa è libro, il nome del controller sarà BookController). Sarebbe ancora meglio creare il controller aggiungendo al comando il flag --resource, in modo da pre-popolare il controller con la definizione di tutte e 7 le funzioni che ci serviranno per le CRUD (cioè, il comando da eseguire sarà: php artisan make:controller NomeController --resource)
-
-6. Definiamo le rotte relative alle funzioni del controller (quindi, 7 rotte). Sarebbe ancora meglio definirle tramite la chiamata al metodo resource di Route (cioè, se voglio definire le rotte relative alla risorsa libro, scriverò: Route::resource('books', BookController::class))
-
-7. Creiamo le view relative alla risorsa. Nello specifico, dobbiamo creare 4 view:
-- Una per l'index
-- Una per lo show
-- Una per il create
-- Una per l'edit
-
-Tutte queste 4 view, saranno messe in una cartella dentro views, nominata come la risorsa al plurale in kebab case (ad es., se la risorsa è mio libro, il nome della cartella sarà my-books). I nomi delle 4 view, solitamente, corrisponderanno al nome della funzione che le restituisce (quindi, index.blade.php per index, show.blade.php per show, create.blade.php per create e edit.blade.php per edit)
-
-# Info utili
-- Comando per tornare indietro di un batch di migration: php artisan migrate:rollback
-- Comando per tornare indietro di tutti i batch di migration: php artisan migrate:reset
-- Comando per eseguire migrate:reset + migrate: php artisan migrate:refresh
-- Comando per eseguire migrate + db:seed: php artisan migrate --seed / php artisan migrate:refresh --seed
-- Comando per vedere la lista delle rotte definite nell'applicazione: php artisan route:list
-- Comando per creare un model, una migration, un seeder e un resource controller tutto insieme: php artisan make:model NomeRisorsa -msr
+Per fare questo collegamento a livello di database, non potendo inserire FK nelle due tabelle A e B (perché si creerebbe una relazione di tipo one-to-many), definiamo e costruiamo una terza tabella definita tabella ponte. Questa tabella conterrà, come minimo, 2 colonne contenenti i riferimenti alle righe delle tabelle A e B, rispettivamente
