@@ -11,7 +11,55 @@
         @vite('resources/js/app.js')
     </head>
     <body>
-        <header>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-2 vh-100 bg-primary">
+                    <aside class="h-100 d-flex flex-column py-2">
+                        <div class="mb-5 text-center py-3">
+                            @include('partials.logo')
+                        </div>
+                        <nav class="flex-grow-1">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{{ route('admin.posts.index') }}">Post</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{{ route('admin.categories.index') }}">Categorie</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{{ route('admin.tags.index') }}">Tag</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{{ route('admin.contacts.index') }}">Contatti</a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                        <form method="POST" action="{{ route('logout') }}" class="w-100">
+                            @csrf
+
+                            <button type="submit" class="btn btn-danger w-100">
+                                Esci
+                            </button>
+                        </form>
+                    </aside>
+                </div>
+
+                <div class="col-10 vh-100 bg-dark">
+                    <main class="py-4 h-100 d-flex flex-column">
+                        <div class="flex-grow-1 overflow-y-auto overflow-x-hidden">
+                            @yield('main-content')
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+
+        {{-- <header>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container">
                     <a class="navbar-brand" href="/">Template</a>
@@ -52,6 +100,6 @@
             <div class="container">
                 @yield('main-content')
             </div>
-        </main>
+        </main> --}}
     </body>
 </html>
