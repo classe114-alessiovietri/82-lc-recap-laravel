@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\MainController as AdminMainController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\TagController as AdminTagController;
+use App\Http\Controllers\Admin\ContactController as AdminContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,12 @@ Route::prefix('admin')
     Route::resource('categories', AdminCategoryController::class);
 
     Route::resource('tags', AdminTagController::class);
+
+    Route::resource('contacts', AdminContactController::class)->only([
+        'index',
+        'show',
+        'destroy',
+    ]);
 
 });
 
