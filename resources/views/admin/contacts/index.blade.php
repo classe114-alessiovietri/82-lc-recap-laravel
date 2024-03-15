@@ -11,6 +11,24 @@
                         Tutti i contatti
                     </h1>
 
+                    <div class="mb-3">
+                        <form action="{{ route('admin.contacts.index') }}" method="GET" class="row g-2">
+                            <div class="col">
+                                <label for="name" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Cerca per nome..." value="{{ request()->input('name') }}">
+                            </div>
+                            <div class="col">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Cerca per email..." value="{{ request()->input('email') }}">
+                            </div>
+                            <div class="col-auto d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary">
+                                    Cerca
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
                     <table class="table">
                         <thead>
                             <tr>
